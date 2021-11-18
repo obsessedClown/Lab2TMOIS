@@ -1,69 +1,54 @@
-def unifi(a: list, b: list):  # создание функции для объединения множеств
+def unification(first_set: list, second_set: list):  # создание функции для объединения множеств
     c = []  # создание пустого списка
-    for x in range(len(a)):  # добавление элементов списка А и В в список С
-        c.append(a[x])
-    for y in range(len(b)):
-        if b[y] not in c:
-            c.append(b[y])
+    for x in range(len(first_set)):  # добавление элементов списка А и В в список С
+        c.append(first_set[x])
+    for y in range(len(second_set)):
+        if second_set[y] not in c:
+            c.append(second_set[y])
     print("Результат выполнения операции объединения: \n", c)
 
 
-def inters(a: list, b: list):  # создание функции для объединения множеств
+def intersection(first_set: list, second_set: list):  # создание функции для объединения множеств
     c = []  # создание пустого списка
-    for x in range(len(a)):
-        for y in range(len(b)):
-            if a[x] == b[y]:  # сравнивание элементов списка А с элементами списка В
-                c.append(a[x])  # добавление эквивалентных элементов из списка А и В в список С
+    for x in range(len(first_set)):
+        for y in range(len(second_set)):
+            if first_set[x] == second_set[y]:  # сравнивание элементов списка А с элементами списка В
+                c.append(first_set[x])  # добавление эквивалентных элементов из списка А и В в список С
     print("Результат выполнения операции пересечения: \n", c)
 
 
-def diff(a: list, b:list):
+def difference(first_set: list, second_set: list):
     c = []
-    for x in range(len(a)):
-        if a[x] not in b:
-            c.append(a[x])
+    for x in range(len(first_set)):
+        if first_set[x] not in second_set:
+            c.append(first_set[x])
     print("Результат выполнения операции разности: \n", c)
 
 
-def diff1_2(a: list, b:list):
+def symmetric_difference(first_set: list, second_set: list):
     c = []
-    for x in range(len(a)):
-        if a[x] not in b:
-            c.append(a[x])
-    print("Результат выполнения операции разности: \n", c)
-
-
-def diff2_1(a: list, b:list):
-    c = []
-    for y in range(len(b)):
-        if b[y] not in a:
-            c.append(b[y])
-    print("Результат выполнения операции разности: \n", c)
-
-
-def symm_diff(a: list, b:list):
-    c = []
-    for x in range(len(a)):
-        if a[x] not in b:
-            c.append(a[x])
-    for y in range(len(b)):
-        if b[y] not in a:
-            c.append(b[y])
+    for x in range(len(first_set)):
+        if first_set[x] not in second_set:
+            c.append(first_set[x])
+    for y in range(len(second_set)):
+        if second_set[y] not in first_set:
+            c.append(second_set[y])
     print("Результат выполнения операции симметрической разности: \n", c)
 
 
-def addition(a: list, b:list):
+def addition(first_set: list, uni_set: list):
     c = []
-    for y in range(len(b)):
-        if b[y] not in a:
-            c.append(b[y])
+    for y in range(len(uni_set)):
+        if uni_set[y] not in first_set:
+            c.append(uni_set[y])
     print("Результат выполнения операции дополнение: \n", c)
 
 
 lenA = int(input("Введите мощность множества A: "))
 lenB = int(input("Введите мощность множества B: "))  # ввод мощностей множеств А и В
 
-if lenA > 20 or lenB > 20:  # вводим условие того, что вводимая пользователем мощность множеств А и В не должна превышать 20
+if lenA > 20 or lenB > 20:  # вводим условие того, что вводимая пользователем мощность множеств А и В не должна
+    # превышать 20
     print("Мощность множества не должна превышать 20! ")  # выводим на экран сообщений об ошибке
     quit()  # выходим из программы в связи с ошибкой
 
@@ -92,25 +77,32 @@ for iB in range(lenB):  # ввод элементов списка B
         print("Во множестве не может быть одинаковых элементов!")
         quit()
 
-universum = []
-for a in range(1,51,1):
-    universum.append(a)
+universe = []
+for a in range(1, 51, 1):
+    universe.append(a)
 
-choise = int(input("Выберите операцию: 1 - объединение; 2 - пересечение; 3 - разность(1-2); 4 - разность(2-1); "
-                   "5 - симметрическая разность; 6 - дополнение(A); 7 - дополнение(B); \n"))
+operation_selection = int(input("Выберите операцию: 1 - объединение; 2 - пересечение; 3 - разность; 4 - симметрическая "
+                                "разность; 5 - дополнение до универсума; \n"))
 
-match choise:
+match operation_selection:
     case 1:
-        unifi(A, B)
+        unification(A, B)
     case 2:
-        inters(A, B)
+        intersection(A, B)
     case 3:
-        diff(A, B)
+        difference_selection = int(input("Выберите порядок следования множеств: 1 - между A и B; 2 - между B и A; \n"))
+        match difference_selection:
+            case 1:
+                difference(A, B)
+            case 2:
+                difference(B, A)
     case 4:
-        diff(B, A)
+        symmetric_difference(A, B)
     case 5:
-        symm_diff(A, B)
-    case 6:
-        addition(A, universum)
-    case 7:
-        addition(B, universum)
+        addition_selection = int(input("Выберите, для какого множества выполнить операцию дополнения: 1 - для "
+                                       "множества A; 2 - для множества B; \n"))
+        match addition_selection:
+            case 1:
+                addition(A, universe)
+            case 2:
+                addition(B, universe)
