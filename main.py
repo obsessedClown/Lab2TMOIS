@@ -44,6 +44,14 @@ def addition(first_set: list, uni_set: list):
     print("Результат выполнения операции дополнение: \n", c)
 
 
+def cartesian_product(first_set: list, second_set: list):
+    c = []
+    for x in range(len(first_set)):
+        for y in range(len(second_set)):
+            c.append([first_set[x], second_set[y]])
+    print(c)
+
+
 lenA = int(input("Введите мощность множества A: "))
 lenB = int(input("Введите мощность множества B: "))  # ввод мощностей множеств А и В
 
@@ -82,7 +90,7 @@ for a in range(1, 51, 1):
     universe.append(a)
 
 operation_selection = int(input("Выберите операцию: 1 - объединение; 2 - пересечение; 3 - разность; 4 - симметрическая "
-                                "разность; 5 - дополнение до универсума; \n"))
+                                "разность; 5 - дополнение до универсума; 6 - декартово произведение; \n"))
 
 match operation_selection:
     case 1:
@@ -90,7 +98,7 @@ match operation_selection:
     case 2:
         intersection(A, B)
     case 3:
-        difference_selection = int(input("Выберите порядок следования множеств: 1 - между A и B; 2 - между B и A; \n"))
+        difference_selection = int(input("Выберите порядок следования множеств: 1 - A и B; 2 - B и A; \n"))
         match difference_selection:
             case 1:
                 difference(A, B)
@@ -106,3 +114,10 @@ match operation_selection:
                 addition(A, universe)
             case 2:
                 addition(B, universe)
+    case 6:
+        cartesian_product_selection = int(input("Выберите порядок следования множеств: 1 - A и B; 2 - B и A; \n"))
+        match cartesian_product_selection:
+            case 1:
+                cartesian_product(A, B)
+            case 2:
+                cartesian_product(B, A)
